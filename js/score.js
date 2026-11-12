@@ -1,4 +1,5 @@
-import { animate, scrambleText } from "https://cdn.jsdelivr.net/npm/animejs@4/+esm";
+// 同样改成引用本地文件，页面不再依赖外网 CDN
+import { animate, scrambleText } from "./vendor/anime.esm.min.js";
 
 export function initScoreAnim() {
   var btn = document.querySelector(".primary-button");

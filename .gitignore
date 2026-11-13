@@ -1,0 +1,39 @@
+# 依赖
+node_modules/
+
+# 构建产物（npm run build 生成）
+dist/
+dist-ssr/
+
+# 日志
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 本地环境变量（.env.example 可以提交）
+.env
+.env.*
+!.env.example
+*.local
+
+# 缓存
+.vite/
+.cache/
+*.tsbuildinfo
+
+# 编辑器 / 系统文件
+.DS_Store
+Thumbs.db
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# VS Code 个人工作区配置（settings.json 已在版本库中，保持提交）
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json

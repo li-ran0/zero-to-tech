@@ -1,7 +1,6 @@
-// 用本地文件，不再从 jsdelivr 下载。
-// 之前从 CDN 顶层 import：网络稍差（国内访问 jsdelivr 常要 20 秒以上甚至超时）
-// 整个 main.js 都跑不起来，卡片会一直停在 opacity: 0。
-import { animate, stagger } from "./vendor/anime.esm.min.js";
+// 从 npm 依赖里按包名导入，Vite 会解析 node_modules 并打包进构建产物。
+// 不再依赖 CDN，也不用维护 js/vendor 里的副本。
+import { animate, stagger } from "animejs";
 
 export function initCardsAnim() {
   animate(".card", {

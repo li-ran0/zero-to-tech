@@ -1,5 +1,5 @@
-// 同样改成引用本地文件，页面不再依赖外网 CDN
-import { animate, scrambleText } from "./vendor/anime.esm.min.js";
+// 从 npm 依赖里按包名导入，由 Vite 解析并打包
+import { animate, scrambleText } from "animejs";
 
 export function initScoreAnim() {
   var btn = document.querySelector(".primary-button");

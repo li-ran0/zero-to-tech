@@ -1,0 +1,33 @@
+{
+  "name": "zero-to-tech",
+  "version": "1.0.0",
+  "private": true,
+  "description": "零到全栈配套项目：个人主页与文字实验室（Vite + 原生 ES 模块）",
+  "type": "module",
+  "keywords": [
+    "zero-to-tech",
+    "vite",
+    "vanilla-js",
+    "personal-website",
+    "es-modules"
+  ],
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/li-ran0/zero-to-tech.git"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^8.3.8"
+  },
+  "dependencies": {
+    "animejs": "^4.5.0"
+  }
+}

@@ -2,14 +2,13 @@
   "name": "zero-to-tech",
   "version": "1.0.0",
   "private": true,
-  "description": "零到全栈配套项目：个人主页与文字实验室（Vite + React）",
-  "type": "module",
+  "description": "零到全栈配套项目：个人主页与文字实验室（Next.js）",
   "keywords": [
     "zero-to-tech",
-    "vite",
+    "nextjs",
     "react",
-    "personal-website",
-    "es-modules"
+    "app-router",
+    "personal-website"
   ],
   "license": "ISC",
   "repository": {
@@ -20,17 +19,14 @@
     "node": "^20.19.0 || >=22.12.0"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-react": "^6.3.0",
-    "vite": "^8.3.8"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
-    "animejs": "^4.5.0",
-    "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "animejs": "^4.4.1",
+    "next": "^15.0.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
   }
 }

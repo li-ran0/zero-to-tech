@@ -9,6 +9,9 @@ out/
 build/
 dist/
 
+# python
+backend/.venv/
+
 # editor
 .vscode/*
 !.vscode/extensions.json

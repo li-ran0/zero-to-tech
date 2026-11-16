@@ -11,6 +11,9 @@ dist/
 
 # python
 backend/.venv/
+backend/__pycache__/
+*.py[cod]
+
 
 # editor
 .vscode/*

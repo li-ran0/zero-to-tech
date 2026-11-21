@@ -21,11 +21,14 @@ export default function InputCard({ onResult }) {
         throw new Error("NEXT_PUBLIC_API_BASE_URL 未配置：检查 .env.local 是否写了该变量，改完要重启 dev server");
       }
 
+      // InputCard 里发分析请求
       const res = await fetch(`${API}/api/analyze`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",            // ← 新增：带上 cookie
         body: JSON.stringify({ text }),
       });
+
 
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));

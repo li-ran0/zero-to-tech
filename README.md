@@ -9,6 +9,17 @@ npm install
 npm run dev          # http://localhost:3000   （Next 默认端口是 3000）
 ```
 
+另一个终端跑后端：
+
+```bash
+cd backend
+.venv\Scripts\fastapi dev --host ::
+```
+
+<!-- --host :: 是必须的：接口要走 localhost:8000 才能和前端的 localhost:3000 同站，
+     浏览器的 session cookie 才会被带上。理由见 .env.local 里的注释。 -->
+
+
 生产构建：
 
 ```bash

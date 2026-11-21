@@ -1,35 +1,15 @@
+# backend/main.py
 from fastapi import FastAPI
-from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from pypinyin import lazy_pinyin, Style
 from snownlp import SnowNLP
-import json
 from datetime import datetime
-from pathlib import Path
-
-
-
-# 用 __file__ 定位，不依赖进程的工作目录：
-# 从 backend/ 启动和从项目根用 --app-dir 启动，都会落到同一个文件上。
-HISTORY_FILE = Path(__file__).with_name("history.json")
-
-def load_history():
-    try:
-        with open(HISTORY_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return []
-
-def save_record(record):
-    records = load_history()
-    records.append(record)
-    with open(HISTORY_FILE, "w", encoding="utf-8") as f:
-        json.dump(records, f, ensure_ascii=False, indent=2)
-
-
-
+from storage import init_db, save_record, get_history
 
 app = FastAPI()
+
+init_db()
 
 app.add_middleware(
     CORSMiddleware,
@@ -37,7 +17,6 @@ app.add_middleware(
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
-
 
 profile = {
     "heroTitle": "关于我",
@@ -54,15 +33,8 @@ profile = {
     },
 }
 
-
 class AnalyzeRequest(BaseModel):
     text: str
-
-
-@app.get("/api/profile")
-def get_profile():
-    return profile
-
 
 def score_label(score):
     if score >= 0.6:
@@ -71,6 +43,10 @@ def score_label(score):
         return "偏消极"
     else:
         return "中性"
+
+@app.get("/api/profile")
+def get_profile():
+    return profile
 
 @app.post("/api/analyze")
 def analyze(req: AnalyzeRequest):
@@ -82,15 +58,12 @@ def analyze(req: AnalyzeRequest):
         "label": score_label(score),
         "pinyin": " ".join(lazy_pinyin(text, style=Style.TONE)),
         # astimezone() 带上本机时区，存成 2026-11-18T22:15:00+08:00 这种形式；
-        # 原来是 UTC，前端直接显示会差 8 小时。
+        # UTC 会让前端直接显示时差 8 小时。
         "created_at": datetime.now().astimezone().isoformat(timespec="seconds"),
     }
-    save_record(result)                                                          # ← 存档到文件
+    save_record(result)
     return result
 
 @app.get("/api/history")
 def history():
-    records = load_history()
-    records.reverse()          # 倒过来：新的排前面
-    return records[:10]        # 只返回最近 10 条
-
+    return get_history(10)

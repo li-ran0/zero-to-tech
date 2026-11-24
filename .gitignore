@@ -24,6 +24,7 @@ backend/*.db
 .DS_Store
 *.log
 .env*
+!.env.example
 
 # workbuddy 本地工作数据（会话日志、临时产物），不入库
 .workbuddy/

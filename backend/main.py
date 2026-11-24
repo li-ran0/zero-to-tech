@@ -7,6 +7,18 @@ from snownlp import SnowNLP
 from datetime import datetime, timezone
 from storage import init_db, save_record, get_history
 import uuid
+import os
+from dotenv import load_dotenv
+
+load_dotenv()                        # ← 读同目录下的 .env
+
+ALLOWED_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv(
+        "ALLOWED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000"
+    ).split(",")
+    if origin.strip()
+]
 
 app = FastAPI()
 
@@ -14,7 +26,7 @@ init_db()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
     allow_credentials=True,          # ← 新增：允许跨源请求带上 cookie

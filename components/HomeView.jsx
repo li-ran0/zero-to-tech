@@ -23,8 +23,10 @@ export default function HomeView() {
         // 兜底：变量名写错 / 忘了建 .env.local / 改了没重启，都会让 API 变成 undefined，
         // 然后被拼成 "undefined/api/profile" 这种相对路径，最后报一个莫名其妙的 404。
         // 在这里先拦一道，错误信息才说得清。
-        if (!API) {
-          throw new Error("NEXT_PUBLIC_API_BASE_URL 未配置：检查 .env.local 是否写了该变量，改完要重启 dev server");
+        // 用 === undefined 而不是 !API：部署时该变量会是空字符串（走同源相对路径），
+        // 空字符串属于合法配置，不能误判成"未配置"。
+        if (API === undefined) {
+          throw new Error("NEXT_PUBLIC_API_BASE_URL 未配置：检查 .env.local 是否写了该变量，改完要重启 dev server 或重新 build");
         }
 
         const res = await fetch(`${API}/api/profile`);

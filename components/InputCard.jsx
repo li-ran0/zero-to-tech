@@ -17,8 +17,11 @@ export default function InputCard({ onResult }) {
 
     try {
       // 同上：API 没配时早点报一句人话，别让 URL 拼成 "undefined/api/analyze" 再收到 404。
-      if (!API) {
-        throw new Error("NEXT_PUBLIC_API_BASE_URL 未配置：检查 .env.local 是否写了该变量，改完要重启 dev server");
+      // 用 === undefined 而不是 !API：部署时我们会把变量设成"空字符串"，
+      // 让请求走同源相对路径 /api/analyze（由 nginx 转发到后端）。
+      // 空字符串是合法配置，不能被当成"未配置"。
+      if (API === undefined) {
+        throw new Error("NEXT_PUBLIC_API_BASE_URL 未配置：检查 .env.local 是否写了该变量，改完要重启 dev server 或重新 build");
       }
 
       // InputCard 里发分析请求

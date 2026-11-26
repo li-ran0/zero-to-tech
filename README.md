@@ -169,7 +169,7 @@ location / {
 
 上线前检查：
 
-1. 把 `NEXT_PUBLIC_API_BASE_URL` 指向线上后端，**然后重新 build**（值会被写死进静态文件）
+1. **不要把** `NEXT_PUBLIC_API_BASE_URL` 写成 `http://localhost:8000` 这类地址——生产环境它必须是**空字符串**：请求走同源相对路径 `/api/xxx`，由 nginx 转发到后端。空值由入库的 `.env.production` 提供（`dev` 用 `.env.local`）。改了任何 env 都要**重新 build**，值会被写死进 `out/` 的静态文件；写成空值后**仍有个 `undefined` 的可能**——如果构建机上三个 env 文件全无，变量就不存在，产物里 `!API` 会恒真，页面必报"未配置"（这个坑已修，见 `components/InputCard.jsx` 的 `API === undefined`）
 2. 把 `backend/.env` 的 `ALLOWED_ORIGINS` 改成前端真实 origin（协议 + 域名 + 端口，不带路径）
 3. 后端用 uvicorn 常驻，例如：
    `nohup uvicorn main:app --host 0.0.0.0 --port 8000 > ~/uvicorn.log 2>&1 &`
